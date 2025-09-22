@@ -309,7 +309,11 @@ export const addnewUser = async(req,res)=>{
 
     try {
 
-        const {name,email,password} = req.body
+      const {id,role} = req.user
+
+      if(!id || !role || role != 'admin') return res.status(401).json({success:false,message:'Not Authorized'})
+
+        const {name,email,address,password} = req.body
 
         const existingUser = await prisma.user.findUnique({where:{email}})
 
@@ -318,7 +322,7 @@ export const addnewUser = async(req,res)=>{
         const hashedPass = await bcrypt.hash(password,10)
         
         const  user = await prisma.user.create({
-            data:{name,email,password:hashedPass}
+            data:{name,email,address,password:hashedPass}
         })
 
         console.log("User Registered Successfully",user.id)
