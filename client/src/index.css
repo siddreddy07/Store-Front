@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+body {
+  min-height: 100vh; /* ensures full viewport height */
+  margin: 0; /* remove default body margin */
+  background: radial-gradient(ellipse at bottom, #1e1a78, #000000, #000000);
+  background-size: cover; /* cover entire screen */
+  background-repeat: no-repeat; /* no repeat */
+  background-attachment: fixed; /* stays fixed while scrolling */
+}
+
+/* Chrome, Edge, Safari */
+.scrollable-table::-webkit-scrollbar {
+  width: 6px; /* Thin scrollbar */
+}
+
+.scrollable-table::-webkit-scrollbar-track {
+  background: transparent; /* Track invisible */
+}
+
+.scrollable-table::-webkit-scrollbar-thumb {
+  background-color: rgba(211, 211, 211, 0.5); /* Subtle thumb */
+  border-radius: 10px; /* Rounded edges */
+  border: 1px solid transparent; /* Optional spacing effect */
+}
