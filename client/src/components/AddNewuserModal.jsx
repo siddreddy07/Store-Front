@@ -1,5 +1,7 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
 import { AuthContext } from "../contextApi/AuthContext";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function AddNewUserModal({close}) {
   const { registerUser } = useContext(AuthContext);
@@ -74,10 +76,32 @@ export default function AddNewUserModal({close}) {
       return;
     }
 
-    const signup = await registerUser(form);
+    const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/add-new-user`,form,{withCredentials:true});
 
-    if (signup) {
+    if (res.data.success) {
+      toast(res.data.message || "New User Registration successful!", {
+        icon: "✅",
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+
       setForm({ name: "", email: "", address: "", password: "", role: "normal" });
+      close()
+      
+    }
+
+    else{
+      toast(res.data.message || "Unable to Add New User", {
+        icon: "⚠️",
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
     }
   };
 
